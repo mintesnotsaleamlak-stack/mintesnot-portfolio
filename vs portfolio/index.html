@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mintesnot — Video Editor</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #080B10;
+    color: #F4F4F0;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+}
+
+/* NAVIGATION */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    background: rgba(8,11,16,0.78);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.logo {
+    font-size: 19px;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+.logo span {
+    color: #1677FF;
+}
+
+.nav-links {
+    display: flex;
+    gap: 35px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: #858E9A;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    transition: .3s;
+}
+
+.nav-links a:hover {
+    color: #F4F4F0;
+}
+
+/* HERO */
+
+.hero {
+    min-height: 100vh;
+    padding: 150px 7% 80px;
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    align-items: center;
+    gap: 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    right: -200px;
+    top: 100px;
+    background: rgba(22,119,255,0.08);
+    filter: blur(100px);
+    border-radius: 50%;
+}
+
+.hero-label {
+    color: #FF8A00;
+    font-size: 11px;
+    letter-spacing: 4px;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+.hero h1 {
+    font-size: clamp(70px, 9vw, 145px);
+    line-height: .82;
+    letter-spacing: -8px;
+    font-weight: 900;
+    margin-bottom: 35px;
+}
+
+.hero h1 span {
+    color: #1677FF;
+}
+
+.hero-description {
+    max-width: 500px;
+    color: #8B96A5;
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 35px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.button {
+    padding: 14px 22px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    transition: .3s;
+}
+
+.button-primary {
+    background: #F4F4F0;
+    color: #080B10;
+}
+
+.button-primary:hover {
+    background: #1677FF;
+    color: white;
+    transform: translateY(-3px);
+}
+
+.button-outline {
+    border: 1px solid #303743;
+    color: #F4F4F0;
+}
+
+.button-outline:hover {
+    border-color: #FF8A00;
+    color: #FF8A00;
+}
+
+/* HERO PHOTO */
+
+.hero-photo-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-photo {
+    position: relative;
+    width: min(430px, 100%);
+    height: 560px;
+    overflow: hidden;
+}
+
+.hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+}
+
+.photo-line {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(22,119,255,.5);
+    top: 18px;
+    left: 18px;
+    pointer-events: none;
+}
+
+.photo-detail {
+    position: absolute;
+    width: 55px;
+    height: 3px;
+    background: #FF8A00;
+    bottom: 15px;
+    left: 0;
+}
+
+.hero-side-note {
+    position: absolute;
+    right: -30px;
+    bottom: 30px;
+    writing-mode: vertical-rl;
+    color: #525C68;
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+/* SECTION */
+
+section {
+    padding: 120px 7%;
+}
+
+.section-label {
+    color: #FF8A00;
+    font-size: 10px;
+    letter-spacing: 3px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.section-title {
+    font-size: clamp(45px,6vw,80px);
+    line-height: .95;
+    letter-spacing: -5px;
+    margin-bottom: 25px;
+}
+
+.section-title span {
+    color: #1677FF;
+}
+
+.section-description {
+    max-width: 600px;
+    color: #7E8997;
+    line-height: 1.8;
+}
+
+/* ABOUT */
+
+.about {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 90px;
+    align-items: center;
+}
+
+.about-image {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+    background: #0D1218;
+}
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.about-image::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: #1677FF;
+    z-index: 2;
+}
+
+.about-text p {
+    color: #89939F;
+    line-height: 1.9;
+    margin-bottom: 20px;
+}
+
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 30px;
+}
+
+.skill {
+    padding: 8px 13px;
+    border: 1px solid #272F39;
+    color: #AAB3BE;
+    font-size: 10px;
+    border-radius: 3px;
+}
+
+/* WORK */
+
+.work {
+    background: #0B0F14;
+}
+
+.work-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 55px;
+}
+
+.work-count {
+    color: #5E6874;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+/* CATEGORY CARDS */
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 1px;
+    background: #252C34;
+    border: 1px solid #252C34;
+}
+
+.category-card {
+    position: relative;
+    min-height: 240px;
+    padding: 35px;
+    border: none;
+    background: #0B0F14;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    overflow: hidden;
+    transition: .4s;
+}
+
+.category-card:hover {
+    background: #10161D;
+}
+
+.category-number {
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    font-size: 90px;
+    font-weight: 900;
+    color: rgba(255,255,255,.025);
+    transition: .4s;
+}
+
+.category-card:hover .category-number {
+    color: rgba(22,119,255,.08);
+}
+
+.category-icon {
+    font-size: 25px;
+    margin-bottom: 55px;
+}
+
+.category-card h3 {
+    font-size: 27px;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+}
+
+.category-card p {
+    color: #626D7A;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.category-line {
+    position: absolute;
+    bottom: 0;
+    left: 35px;
+    width: 0;
+    height: 2px;
+    background: #1677FF;
+    transition: .4s;
+}
+
+.category-card:hover .category-line {
+    width: 70px;
+}
+
+/* CATEGORY CONTENT */
+
+.category-content {
+    display: none;
+    margin-top: 60px;
+}
+
+.back-button {
+    background: transparent;
+    color: #7C8794;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+}
+
+.back-button:hover {
+    color: #1677FF;
+}
+
+.category-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 30px;
+}
+
+.category-heading h3 {
+    font-size: 35px;
+    letter-spacing: -2px;
+}
+
+.category-heading h3 span {
+    color: #1677FF;
+}
+
+/* PROJECTS */
+
+.projects {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 18px;
+}
+
+.project {
+    background: #0F141B;
+    border: 1px solid #252C34;
+    overflow: hidden;
+    transition: .4s;
+}
+
+.project:hover {
+    transform: translateY(-5px);
+    border-color: #1677FF;
+}
+
+/* TIKTOK PROJECT */
+
+.tiktok-project {
+    display: block;
+    width: 100%;
+    height: 270px;
+    background: linear-gradient(135deg,#080B10,#101923);
+    position: relative;
+    overflow: hidden;
+}
+
+.tiktok-preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    transition: .3s;
+}
+
+.tiktok-preview:hover {
+    background: #1677FF;
+    transform: scale(1.02);
+}
+
+.project-info {
+    padding: 17px;
+}
+
+.project-info h3 {
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.project-info p {
+    color: #5E6976;
+    font-size: 10px;
+}
+
+/* EMPTY */
+
+.empty-projects {
+    padding: 80px 20px;
+    text-align: center;
+    border: 1px solid #252C34;
+}
+
+.empty-projects h3 {
+    margin-bottom: 10px;
+}
+
+.empty-projects p {
+    color: #687481;
+    font-size: 12px;
+}
+
+/* SERVICES */
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 1px;
+    background: #252C34;
+    border: 1px solid #252C34;
+    margin-top: 55px;
+}
+
+.service {
+    background: #080B10;
+    padding: 35px 25px;
+    min-height: 210px;
+}
+
+.service-number {
+    color: #1677FF;
+    font-size: 10px;
+    margin-bottom: 45px;
+}
+
+.service h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.service p {
+    color: #687481;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+/* CONTACT */
+
+.contact {
+    text-align: center;
+    background: #0B0F14;
+}
+
+.contact .section-description {
+    margin: auto;
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 35px;
+}
+
+.contact-link {
+    padding: 13px 20px;
+    border: 1px solid #29313B;
+    color: #AAB3BE;
+    font-size: 10px;
+    letter-spacing: 1px;
+    transition: .3s;
+}
+
+.contact-link:hover {
+    color: #F4F4F0;
+    border-color: #1677FF;
+    transform: translateY(-3px);
+}
+
+/* FOOTER */
+
+footer {
+    padding: 30px 7%;
+    display: flex;
+    justify-content: space-between;
+    color: #4E5966;
+    font-size: 9px;
+    letter-spacing: 1px;
+    border-top: 1px solid #171D24;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+    .hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .hero-photo-area {
+        justify-content: flex-start;
+    }
+
+    .hero-photo {
+        height: 480px;
+    }
+
+    .about {
+        grid-template-columns: 1fr;
+    }
+
+    .services-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .projects {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    section {
+        padding: 85px 6%;
+    }
+
+    .hero {
+        padding: 125px 6% 70px;
+    }
+
+    .hero h1 {
+        font-size: 60px;
+        letter-spacing: -4px;
+    }
+
+    .hero-photo {
+        height: 400px;
+    }
+
+    .photo-line {
+        top: 10px;
+        left: 10px;
+    }
+
+    .categories {
+        grid-template-columns: 1fr;
+    }
+
+    .projects {
+        grid-template-columns: 1fr;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .work-header {
+        display: block;
+    }
+
+    .work-count {
+        margin-top: 15px;
+    }
+
+    footer {
+        display: block;
+        text-align: center;
+        line-height: 2;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<header class="navbar">
+
+    <a href="#home" class="logo">
+        MINTESNOT<span>.</span>
+    </a>
+
+    <ul class="nav-links">
+
+        <li><a href="#home">HOME</a></li>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#work">WORK</a></li>
+        <li><a href="#services">SERVICES</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+
+    </ul>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="hero-label">
+            VIDEO EDITOR · 2026
+        </div>
+
+        <h1>
+            VISUAL
+            <br>
+            <span>STORIES.</span>
+        </h1>
+
+        <p class="hero-description">
+            I create clean, engaging and memorable
+            video content for brands, businesses and
+            social media.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#work" class="button button-primary">
+                VIEW MY WORK
+            </a>
+
+            <a href="#contact" class="button button-outline">
+                CONTACT ME
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-photo-area">
+
+        <div class="hero-photo">
+
+            <img
+                src="images/minte%20photo.png"
+                alt="Mintesnot"
+            >
+
+            <div class="photo-line"></div>
+            <div class="photo-detail"></div>
+
+        </div>
+
+        <div class="hero-side-note">
+            EDIT · CREATE · REPEAT
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+    <div class="about">
+
+        <div class="about-image">
+
+            <img
+                src="images/minte%20photo.png"
+                alt="Mintesnot"
+            >
+
+        </div>
+
+        <div class="about-text">
+
+            <div class="section-label">
+                ABOUT ME
+            </div>
+
+            <h2 class="section-title">
+                BEHIND
+                <br>
+                THE
+                <span>EDIT.</span>
+            </h2>
+
+            <p>
+                I'm Mintesnot, a video editor focused on
+                creating visual stories that connect with
+                audiences.
+            </p>
+
+            <p>
+                From brand videos to social media content,
+                I combine editing, motion, sound and
+                storytelling to create content that feels
+                intentional.
+            </p>
+
+            <div class="skills">
+
+                <div class="skill">Premiere Pro</div>
+                <div class="skill">After Effects</div>
+                <div class="skill">Motion Graphics</div>
+                <div class="skill">Color Grading</div>
+                <div class="skill">Sound Design</div>
+                <div class="skill">Social Media</div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- WORK -->
+
+<section class="work" id="work">
+
+    <div class="work-header">
+
+        <div>
+
+            <div class="section-label">
+                SELECTED WORK
+            </div>
+
+            <h2 class="section-title">
+                MY
+                <span>PROJECTS.</span>
+            </h2>
+
+            <p class="section-description">
+                Choose a category to explore my work.
+            </p>
+
+        </div>
+
+        <div class="work-count">
+            04 CATEGORIES
+        </div>
+
+    </div>
+
+    <!-- CATEGORY CARDS -->
+
+    <div class="categories" id="categoryGrid">
+
+        <button
+            class="category-card"
+            onclick="showCategory('longtea')"
+        >
+
+            <div class="category-number">
+                01
+            </div>
+
+            <div class="category-icon">
+                🍵
+            </div>
+
+            <h3>
+                LONG TEA
+            </h3>
+
+            <p>
+                01 PROJECT
+            </p>
+
+            <div class="category-line"></div>
+
+        </button>
+
+        <button
+            class="category-card"
+            onclick="showCategory('pizzahut')"
+        >
+
+            <div class="category-number">
+                02
+            </div>
+
+            <div class="category-icon">
+                🍕
+            </div>
+
+            <h3>
+                PIZZA HUT
+            </h3>
+
+            <p>
+                COMING SOON
+            </p>
+
+            <div class="category-line"></div>
+
+        </button>
+
+        <button
+            class="category-card"
+            onclick="showCategory('social')"
+        >
+
+            <div class="category-number">
+                03
+            </div>
+
+            <div class="category-icon">
+                📱
+            </div>
+
+            <h3>
+                SOCIAL MEDIA
+            </h3>
+
+            <p>
+                COMING SOON
+            </p>
+
+            <div class="category-line"></div>
+
+        </button>
+
+        <button
+            class="category-card"
+            onclick="showCategory('other')"
+        >
+
+            <div class="category-number">
+                04
+            </div>
+
+            <div class="category-icon">
+                🎬
+            </div>
+
+            <h3>
+                OTHER PROJECTS
+            </h3>
+
+            <p>
+                COMING SOON
+            </p>
+
+            <div class="category-line"></div>
+
+        </button>
+
+    </div>
+
+    <!-- LONG TEA -->
+
+    <div
+        class="category-content"
+        id="longtea"
+    >
+
+        <button
+            class="back-button"
+            onclick="hideCategories()"
+        >
+            ← BACK TO CATEGORIES
+        </button>
+
+        <div class="category-heading">
+
+            <h3>
+                LONG TEA
+                <span>/ 01</span>
+            </h3>
+
+        </div>
+
+        <div class="projects">
+
+            <div class="project">
+
+                <a
+                    href="https://www.tiktok.com/@longtea.et/video/7676462701777931538"
+                    target="_blank"
+                    class="tiktok-project"
+                >
+
+                    <div class="tiktok-preview">
+                        ▶ WATCH ON TIKTOK
+                    </div>
+
+                </a>
+
+                <div class="project-info">
+
+                    <h3>
+                        Buheee Belu
+                    </h3>
+
+                    <p>
+                        Brand Video · TikTok
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PIZZA HUT -->
+
+    <div
+        class="category-content"
+        id="pizzahut"
+    >
+
+        <button
+            class="back-button"
+            onclick="hideCategories()"
+        >
+            ← BACK TO CATEGORIES
+        </button>
+
+        <div class="empty-projects">
+
+            <h3>
+                MORE PROJECTS COMING SOON
+            </h3>
+
+            <p>
+                This section is ready for your future work.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- SOCIAL MEDIA -->
+
+    <div
+        class="category-content"
+        id="social"
+    >
+
+        <button
+            class="back-button"
+            onclick="hideCategories()"
+        >
+            ← BACK TO CATEGORIES
+        </button>
+
+        <div class="empty-projects">
+
+            <h3>
+                MORE PROJECTS COMING SOON
+            </h3>
+
+            <p>
+                More social media projects will be added soon.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- OTHER PROJECTS -->
+
+    <div
+        class="category-content"
+        id="other"
+    >
+
+        <button
+            class="back-button"
+            onclick="hideCategories()"
+        >
+            ← BACK TO CATEGORIES
+        </button>
+
+        <div class="empty-projects">
+
+            <h3>
+                MORE PROJECTS COMING SOON
+            </h3>
+
+            <p>
+                This section is ready for your future work.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- SERVICES -->
+
+<section id="services">
+
+    <div class="section-label">
+        SERVICES
+    </div>
+
+    <h2 class="section-title">
+        WHAT I
+        <span>DO.</span>
+    </h2>
+
+    <p class="section-description">
+        Creative video solutions built for brands,
+        businesses and digital platforms.
+    </p>
+
+    <div class="services-grid">
+
+        <div class="service">
+
+            <div class="service-number">
+                01
+            </div>
+
+            <h3>
+                Video Editing
+            </h3>
+
+            <p>
+                Professional editing for brand,
+                commercial and social content.
+            </p>
+
+        </div>
+
+        <div class="service">
+
+            <div class="service-number">
+                02
+            </div>
+
+            <h3>
+                Social Media
+            </h3>
+
+            <p>
+                Short-form content designed to
+                capture attention.
+            </p>
+
+        </div>
+
+        <div class="service">
+
+            <div class="service-number">
+                03
+            </div>
+
+            <h3>
+                Motion Graphics
+            </h3>
+
+            <p>
+                Animated text, graphics and visual
+                effects that bring content alive.
+            </p>
+
+        </div>
+
+        <div class="service">
+
+            <div class="service-number">
+                04
+            </div>
+
+            <h3>
+                Color & Sound
+            </h3>
+
+            <p>
+                Color grading and sound design
+                for polished final videos.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section class="contact" id="contact">
+
+    <div class="section-label">
+        CONTACT
+    </div>
+
+    <h2 class="section-title">
+        LET'S MAKE
+        <span>SOMETHING.</span>
+    </h2>
+
+    <p class="section-description">
+
+        Have a project in mind?
+        Let's talk and create something memorable.
+
+    </p>
+
+    <div class="contact-links">
+
+        <a
+            class="contact-link"
+            href="mailto:MINTESNOTSALEAMLAK@gmail.com"
+        >
+            EMAIL
+        </a>
+
+        <a
+            class="contact-link"
+            href="https://wa.me/251905559398"
+            target="_blank"
+        >
+            WHATSAPP
+        </a>
+
+        <a
+            class="contact-link"
+            href="https://www.instagram.com/outofsync.genz/"
+            target="_blank"
+        >
+            INSTAGRAM
+        </a>
+
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+    <span>
+        © 2026 MINTESNOT.
+    </span>
+
+    <span>
+        VIDEO EDITOR
+    </span>
+
+</footer>
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+function showCategory(category) {
+
+    document
+        .getElementById("categoryGrid")
+        .style.display = "none";
+
+    document
+        .querySelectorAll(".category-content")
+        .forEach(function(section) {
+
+            section.style.display = "none";
+
+        });
+
+    document
+        .getElementById(category)
+        .style.display = "block";
+
+    document
+        .getElementById("work")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+function hideCategories() {
+
+    document
+        .querySelectorAll(".category-content")
+        .forEach(function(section) {
+
+            section.style.display = "none";
+
+        });
+
+    document
+        .getElementById("categoryGrid")
+        .style.display = "grid";
+
+    document
+        .getElementById("work")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+</script>
+
+</body>
+
+</html>
